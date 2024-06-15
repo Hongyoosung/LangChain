@@ -1,20 +1,19 @@
 import os
 from langchain.prompts import PromptTemplate
 from langchain.llms import Ollama
-from langchain.chains import SequentialChain
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from langchain.chains import LLMChain
 
 # Ollama 모델 초기화
 llama3 = Ollama(model="llama3")
 
 # 질문 템플릿 형식 정의
-template = "{area1} 와 {area2} 의 시차는 몇시간이야?"
+template = "{area1}와 {area2}의 시차는 몇시간이야?"
 
 # 템플릿 완성
 prompt = PromptTemplate.from_template(template)
 
 # 연결된 체인(Chain) 객체 생성
-chain = prompt | llama3
+chain = LLMChain(llm=llama3, prompt=prompt)
 
 # 입력 데이터 리스트
 input_list = [
